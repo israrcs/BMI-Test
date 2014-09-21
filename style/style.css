@@ -1,0 +1,308 @@
+body{
+    margin: auto;
+    background-color: #a7a9ac;
+}
+.BMI-body{
+    margin: auto;
+    width: 640px;
+    height: 960px;
+    background-color: #F7F7F7;
+    position: relative;
+}
+.radius{
+    border-radius: 99%;
+}
+.BMI-meter-border{
+    width: 74%;
+    height: 49%;
+    background-color: #ececec;
+    left: 12%;
+    top: 2%;
+    box-shadow: 0 4px 3px #fff;
+}
+.BMI-analog{
+    width: 87%;
+    height: 87%;
+    background-color: #F7F7F7;
+    left: 6.5%;
+    top: 7%;
+    box-shadow: 0 2px 18px #B6B1B1;
+    overflow: hidden;
+}
+.BMI-analog-meter{
+    width: 93%;
+    height: 93%;
+    background-color: #fff;
+    left: 3%;
+    top: 3%;
+    border: 1px solid rgb(247, 242, 242);
+    box-shadow: 2px 3px 1px rgb(230, 230, 230);
+    overflow: hidden
+}
+.BMI-digital-border{
+    width: 230px;
+    height: 230px;
+    background-color: #f0f0f0;
+    margin: -218px 0 0 79px;
+    z-index: 5;
+}
+.BMI-digital-meter{
+    background-color: #FFFFFF;
+    width: 183px;
+    height: 183px;
+    margin: 23px;
+    box-shadow: 0 2px 18px #B6B1B1;
+    text-align: center;
+    font-size: 852%;
+    color: #fbd559;
+}
+.BMI-inputAria {
+    width: 100%;
+    height: 35%;
+    left: 0;
+    top: -35%;
+    background-color: #F7F7F7;
+}
+.height{
+    top: 19%;
+    left: 5%;
+}
+.color{
+    color: #989a9d;
+}
+.weight{
+    left: 70%;
+    top: 22%;
+    font-size: 50px;
+}
+.BMI-height-output{
+    left: 2%;
+    top: 24%;
+    color: #4cccfb;
+}
+.BMI-weight-output{
+    left: 81%;
+    top: 24%;
+    color: #ff7807;
+}
+.output-color{
+    font-size: 36px;
+    font-weight: lighter;
+    position: absolute;
+    font-family:sans-serif;
+}
+.input-KG-CM{
+    top: 10px;
+    left: 11px;
+}
+.Input-W-here{
+    left: -14px;
+    top: -69px;
+    text-align: center;
+    color: #ff7807;
+}
+.input-multi-pos{
+    width: 73px;
+    border: none;
+    height: 49px;
+    background-color: #F7F7F7;
+}
+.Input-H-here{
+    left: -17px;
+    top: -61px;
+    color: #4cccfb;
+}
+.tips{
+    position: absolute;
+    font-size: 18px;
+    font-family: sans-serif;
+    top: 135px;
+    left: 555px;
+    z-index: 1;
+    cursor: pointer;
+}
+.valueBox{
+    top: -9px;
+    width: 61px;
+}
+.value-kg{
+    left: 75px;
+    top: 10px;
+}
+.value-Cm{
+    left: 75px;
+    top: 10px;
+    width: 94px;
+}
+.weight-values {
+    left: 80%;
+    top: 44%;
+    z-index: 1;
+}
+.height-values{
+    left: 35px;
+    top: 135px;
+}
+ul.popupBox{
+    margin-top: 0;
+    margin-bottom: 10px;
+    list-style: none;
+    overflow-y: auto;
+    height: 250px;
+}
+.modal-header{
+    font-size: 28px;
+    text-align: center;
+    color: #ffffff;
+}
+li.popup-Li{
+    font-size: 28px;
+    cursor: pointer;
+    text-decoration: blink
+}
+div.modal-body>h3{
+    color: #efefef;
+    position: absolute;
+    width: 100%;
+    margin: 0 0 -34px 0;
+    left: 0;
+}
+.height-values .active{
+    color: #4cccfb;
+}
+
+.weight-values .active{
+    color: #ff7807;
+}
+.inactive{
+    color:#c0c2c4;
+}
+.BMI-controller{
+    width: 100%;
+    height: 35%;
+    position: relative;
+    left: 0;
+    top: 40%;
+}
+.BMI-crop{
+    width: 80%;
+    height: 142%;
+    background-color: #F7F7F7;
+    position: absolute;
+    border-radius: 99%;
+    left: 9%;
+    top: -103%;
+    box-shadow: 0 10px 0 #dddddd
+}
+.input-box{
+    left: 0;
+    border-right:0.5em solid #dddddd;
+}
+.input-boxes{
+    width: 50%;
+    height: 56.5%;
+    background-color: #F7F7F7;
+    position: absolute;
+    border-top: 10px solid #dddddd;
+    border-bottom: 10px solid #dddddd;
+}
+.input-box2{
+    right: 0;
+    float: right;
+    border-left:0.5em solid #dddddd;
+}
+.aroPosition{
+    height: 80%;
+    width: 44%;
+    background-color: #F7F7F7;
+    position: absolute;
+    border-radius: 100%;
+    left: 27%;
+    top: -65%;
+    box-shadow: 0 4px 50px #BBBBC0;
+
+}
+.BMI-multi-aro{
+    position: absolute;
+    font-size: 22px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+.BMI-H-aro{
+    left: 44%;
+    top: 6%;
+    color: #4cccfb;
+}
+.BMI-W-aro{
+    left: 44%;
+    top: 47%;
+    color: #ff7807;
+}
+.digital-BMI{
+    left: 37%;
+    top: 78%;
+    color: #999b9e ;
+    font-size: 26px;
+    font-family: sans-serif;
+}
+.BMI-meter{
+    width: 76%;
+    height: 76%;
+    left: 12.5%;
+    top: 11.5%;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.yellow{
+    background-color: #fbcf40;
+    width: 50%;
+    height: 44%;
+}
+.green{
+    background-color:#40e979;
+    width: 29%;
+    height: 30%;
+    top: -3%;
+    left: 45%;
+    transform: rotate(1deg);
+}
+.orange{
+    background-color: #eaa72b;
+    width: 19%;
+    height: 19%;
+    top: 0;
+    left: 62%;
+    transform: rotate(8deg);
+}
+.red{
+    width: 34%;
+    height: 38%;
+    background-color: #e61515;
+    top: 0;
+    left: 76%;
+    transform: rotate(27deg);
+}
+.meter-cropper{
+    width: 73%;
+    height: 73%;
+    background-color: #fff;
+    border-radius: 99%;
+    top: 13%;
+    left: 14%;
+}
+.BMI-mater-back{
+    background-color: #F7F7F7;
+    width: 100%;
+    height: 45%;
+    top: 0;
+}
+.z-index{
+    z-index: 1;
+}
+.z-index-{
+    z-index: -1;
+}
+.Ab-position{
+    position: absolute;
+}

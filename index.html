@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html ng-app="BMIApp" xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>BMI Calculator </title>
+    <script src="js/angular.min.js"></script>
+    <link rel="stylesheet" href="style/style.css"/>
+    <link rel="stylesheet" href="style/style2.css"/>
+    <link rel="stylesheet" href="style/meter.css"/>
+    <link rel="stylesheet" href="style/bootstrap.min.css"/>
+    <link rel="stylesheet" href="style/bootstrap-theme.min.css"/>
+    <script src="js/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/jquery-1.11.1.js"></script>
+    </head>
+<body>
+<script type="text/ng-template" id="PopupContent.html">
+    <div class="modal-header list-group-item active">
+        {{options.title}}
+    </div>
+    <div class="modal-body">
+        <ul class="popupBox list-group">
+            <li class="popup-Li list-group-item text-center" ng-click="changeSelection(item)" ng-repeat="item in options.items">
+                {{ item + ' ' + options.unit}}
+            </li>
+        </ul>
+        <h3 class="list-group-item active"> Selected Value: {{options.selectedValue}}</h3>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<section class="BMI-body" ng-controller="meter" ng-init="i = 50; selectedHeight = 0;">
+    <div class="BMI-controller">
+        <button class="input-box input-boxes">
+            <span class="height BMI-multi-aro color"> Height </span>
+        </button>
+        <div class="BMI-height-output output-color"></div>
+        <div class="weight-values tips">
+            <div class="valueBox Ab-position" ng-click="setWeight()">
+                <span ng-class="weightUnit === 'kg' ? 'active' : 'inactive'">Kg</span>
+                /
+                <span  ng-class="weightUnit === 'kg' ? 'inactive' : 'active'">lbs</span>
+            </div>
+                <span class="Input-W-here output-color input-multi-pos Ab-position z-index"  ng-click="openWeight()">
+                    <span class="input-KG-CM output-color">{{selectedWeight}}</span>
+                    <span class="value-kg Ab-position">{{weightUnit}}</span>
+                </span>
+        </div>
+        <div class="BMI-weight-output z-index output-color"></div>
+        <div class="height-values tips">
+            <div ng-click="setHeight()">
+                <span ng-class="heightUnit === 'cm' ? 'active' : 'inactive'">Cm</span>
+                /
+                <span ng-class="heightUnit === 'cm' ? 'inactive' : 'active'">Ft in</span>
+            </div>
+            <div>
+                <span class="Input-H-here output-color input-multi-pos Ab-position z-index" ng-click="openHeight()">
+                    <span class="input-KG-CM output-color">{{selectedHeight}}</span>
+                    <span class="value-Cm Ab-position">{{heightUnit}}</span>
+                </span>
+             </div>
+        </div>
+        <button class="input-box2 input-boxes">
+            <span class="weight BMI-multi-aro color Ab-position"> Weight </span>
+        </button>
+        <div class="BMI-crop"></div>
+        <div class="BMI-inputAria Ab-position"></div>
+        <div class="BMI-scales">
+            <div class="BMI-H-scale box-size meter">
+                <div class="BMI-scale-W-aro aroPosition"></div>
+                <div class="multi-scale-aro z-index Ab-position">
+                    <div class="H-scale-L-aro Ab-position"></div>
+                    <div class="H-scale-R-aro Ab-position"></div>
+                </div>
+                <div class="scale-iner-cm-multi lb_ft">{{heightUnit}}</div>
+                <ul style="width : {{(heightMeterBars.length * 18) + 'px'}}; left:{{-(selectedHeight * 90) + 'px'}}">
+                    <li ng-repeat="bar in heightMeterBars track by $index">
+                        <span class="{{heightMeterBars[$index]}} bar"></span>
+                        <span class="value" ng-if="heightMeterBars[$index] === 'lg'">{{$index / 10}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="BMI-W-aro BMI-multi-aro z-index">Weight</div>
+            <div class="BMI-H-aro BMI-multi-aro z-index">Height</div>
+            <div class="BMI-W-scale box-size meter">
+                <div class="BMI-scale-W-aro aroPosition"></div>
+                <div class="multi-scale-aro z-index Ab-position">
+                    <div class="H-scale-L-aro Ab-position"></div>
+                    <div class="H-scale-R-aro Ab-position"></div>
+                </div>
+                <div class="scale-iner-cm-multi lb_kg">{{weightUnit}}</div>
+                <ul id="H_scale" style="width: {{(weightMeterBars.length * 18) + 'px'}}; left:{{-(selectedWeight * 9) + 'px'}}">
+                    <li ng-repeat="bar in weightMeterBars track by $index">
+                        <span class="{{weightMeterBars[$index]}} bar"></span>
+                        <span class="value" ng-if="weightMeterBars[$index] === 'lg'">{{$index}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="BMI-meter-border radius Ab-position">
+        <div class="BMI-analog radius Ab-position">
+            <div class="BMI-mater-back z-index Ab-position">
+                <!--<ul class="meter-values Ab-position">
+                    <li class="meter-value-1 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr0">0</span></li>
+                    <li class="meter-value-2 meterProperty"></li>
+                    <li class="meter-value-3 meterProperty"></li>
+                    <li class="meter-value-4 meterProperty"></li>
+                    <li class="meter-value-5 meterProperty"></li>
+                    <li class="meter-value-6 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr5">5</span></li>
+                    <li class="meter-value-7 meterProperty"></li>
+                    <li class="meter-value-8 meterProperty"></li>
+                    <li class="meter-value-9 meterProperty"></li>
+                    <li class="meter-value-10 meterProperty"></li>
+                    <li class="meter-value-11 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr10">10</span></li>
+                    <li class="meter-value-12 meterProperty"></li>
+                    <li class="meter-value-13 meterProperty"></li>
+                    <li class="meter-value-14 meterProperty"></li>
+                    <li class="meter-value-15 meterProperty"></li>
+                    <li class="meter-value-16 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr15">15</span></li>
+                    <li class="meter-value-17 meterProperty"></li>
+                    <li class="meter-value-18 meterProperty"></li>
+                    <li class="meter-value-19 meterProperty"></li>
+                    <li class="meter-value-20 meterProperty"></li>
+                    <li class="meter-value-21 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr20">20</span></li>
+                    <li class="meter-value-22 meterProperty"></li>
+                    <li class="meter-value-23 meterProperty"></li>
+                    <li class="meter-value-24 meterProperty"></li>
+                    <li class="meter-value-25 meterProperty"></li>
+                    <li class="meter-value-26 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr25">25</span></li>
+                    <li class="meter-value-27 meterProperty"></li>
+                    <li class="meter-value-28 meterProperty"></li>
+                    <li class="meter-value-29 meterProperty"></li>
+                    <li class="meter-value-30 meterProperty"></li>
+                    <li class="meter-value-31 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr30">30</span></li>
+                    <li class="meter-value-32 meterProperty"></li>
+                    <li class="meter-value-33 meterProperty"></li>
+                    <li class="meter-value-34 meterProperty"></li>
+                    <li class="meter-value-35 meterProperty"></li>
+                    <li class="meter-value-36 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr35">35</span></li>
+                    <li class="meter-value-37 meterProperty"></li>
+                    <li class="meter-value-38 meterProperty"></li>
+                    <li class="meter-value-39 meterProperty"></li>
+                    <li class="meter-value-40 meterProperty"></li>
+                    <li class="meter-value-41 large-line meterProperty">
+                        <span class="l-value Ab-position rotate-ltr40">40</span></li>
+
+                </ul>-->
+                <ul class="meter-values Ab-position">
+                    <li class="meter-value-1 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr0">0</span></li>
+                    <li class="meter-value-2 H-bar-s"></li>
+                    <li class="meter-value-3 H-bar-s"></li>
+                    <li class="meter-value-4 H-bar-s"></li>
+                    <li class="meter-value-5 H-bar-s"></li>
+                    <li class="meter-value-6 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr5">5</span></li>
+                    <li class="meter-value-7 H-bar-s"></li>
+                    <li class="meter-value-8 H-bar-s"></li>
+                    <li class="meter-value-9 H-bar-s"></li>
+                    <li class="meter-value-10 H-bar-s"></li>
+                    <li class="meter-value-11 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr10">10</span></li>
+                    <li class="meter-value-12 H-bar-s"></li>
+                    <li class="meter-value-13 H-bar-s"></li>
+                    <li class="meter-value-14 H-bar-s"></li>
+                    <li class="meter-value-15 H-bar-s"></li>
+                    <li class="meter-value-16 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr15">15</span></li>
+                    <li class="meter-value-17 H-bar-s"></li>
+                    <li class="meter-value-18 H-bar-s"></li>
+                    <li class="meter-value-19 H-bar-s"></li>
+                    <li class="meter-value-20 H-bar-s"></li>
+                    <li class="meter-value-21 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr20">20</span></li>
+                    <li class="meter-value-22 H-bar-s"></li>
+                    <li class="meter-value-23 H-bar-s"></li>
+                    <li class="meter-value-24 H-bar-s"></li>
+                    <li class="meter-value-25 H-bar-s"></li>
+                    <li class="meter-value-26 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr25">25</span></li>
+                    <li class="meter-value-27 H-bar-s"></li>
+                    <li class="meter-value-28 H-bar-s"></li>
+                    <li class="meter-value-29 H-bar-s"></li>
+                    <li class="meter-value-30 H-bar-s"></li>
+                    <li class="meter-value-31 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr30">30</span></li>
+                    <li class="meter-value-32 H-bar-s"></li>
+                    <li class="meter-value-33 H-bar-s"></li>
+                    <li class="meter-value-34 H-bar-s"></li>
+                    <li class="meter-value-35 H-bar-s"></li>
+                    <li class="meter-value-36 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr35">35</span></li>
+                    <li class="meter-value-37 H-bar-s"></li>
+                    <li class="meter-value-38 H-bar-s"></li>
+                    <li class="meter-value-39 H-bar-s"></li>
+                    <li class="meter-value-40 H-bar-s"></li>
+                    <li class="meter-value-41 large-line H-bar-s">
+                        <span class="l-value Ab-position rotate-ltr40">40</span></li>
+
+                </ul>
+                <div class="meter-movement-aro Ab-position"
+                     style="-ms-transform: rotate({{(-83 + BMI * 4) + 'deg'}}); -webkit-transform: rotate({{(-83 + BMI * 4) + 'deg'}}); transform: rotate({{(-83 + BMI * 4) + 'deg'}});">
+                    <div class="red-aro Ab-position"></div>
+                    <div class="transparent Ab-position"></div>
+                </div>
+            </div>
+            <div class="BMI-analog-meter radius Ab-position">
+                <div class="BMI-meter">
+                    <div class="yellow all-colors Ab-position z-index"></div>
+                    <div class="green all-colors z-index Ab-position"></div>
+                    <div class="orange all-colors z-index Ab-position"></div>
+                    <div class="red all-colors z-index Ab-position"></div>
+                </div>
+                <div class="BMI-status" style="{{color}}">{{BMIStatus}}</div>
+                <div class="meter-cropper z-index Ab-position"></div>
+                <div class="BMI-digital-border radius Ab-position">
+                    <div class="BMI-digital-meter radius Ab-position">
+                        {{BMI}}
+                        <span class="digital-BMI Ab-position">BMI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
